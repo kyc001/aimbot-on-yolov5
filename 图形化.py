@@ -228,8 +228,8 @@ class YOLOv5Detector(QMainWindow):
             QMessageBox.information(self, "成功", "模型加载成功！")
         except Exception as e:
             self.progress_bar.setVisible(False)
-            self.statusBar().showMessage(f"模型加载失败: {str(e)}")
-            QMessageBox.critical(self, "错误", f"模型加载失败: {str(e)}")
+            self.statusBar().showMessage(f"模型加载失败: {e!s}")
+            QMessageBox.critical(self, "错误", f"模型加载失败: {e!s}")
 
     def load_image(self):
         """加载图片."""
@@ -355,7 +355,7 @@ if __name__ == "__main__":
     # 设置PyQt5的异常处理
     def excepthook(exc_type, exc_value, traceback_obj):
         """处理未捕获的异常."""
-        error_msg = f"错误类型: {exc_type.__name__}\n错误信息: {str(exc_value)}"
+        error_msg = f"错误类型: {exc_type.__name__}\n错误信息: {exc_value!s}"
         QMessageBox.critical(None, "应用程序错误", error_msg)
         sys.__excepthook__(exc_type, exc_value, traceback_obj)
 
