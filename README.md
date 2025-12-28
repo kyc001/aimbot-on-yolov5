@@ -39,8 +39,8 @@
 2. **创建虚拟环境（可选）**：
    ```bash
    python -m venv venv
-   source venv/bin/activate  # Linux/macOS
-   venv\Scripts\activate     # Windows
+   source venv/bin/activate # Linux/macOS
+   venv\Scripts\activate    # Windows
    ```
 3. **安装依赖**：
    ```bash
