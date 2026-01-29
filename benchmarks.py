@@ -112,9 +112,13 @@ def run(
             if f == "-":
                 w = weights  # PyTorch format
             else:
-                w = export.run(
+                export_result = export.run(
                     weights=weights, imgsz=[imgsz], include=[f], batch_size=batch_size, device=device, half=half
-                )[-1]  # all others
+                )
+                # Handle export failure (returns tuple with None values)
+                if export_result is None or len(export_result) == 0 or export_result[-1] is None:
+                    raise AssertionError(f"export failed for {f}")
+                w = export_result[-1]  # all others
             assert suffix in str(w), "export failed"
 
             # Validate
