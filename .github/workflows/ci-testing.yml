@@ -6,14 +6,50 @@ name: YOLOv5 CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, main, "**"]
   pull_request:
-    branches: [master]
+    branches: [master, main]
   schedule:
     - cron: "0 0 * * *" # runs at 00:00 UTC every day
   workflow_dispatch:
 
 jobs:
+  # 自定义项目测试 - 验证 GUI 工具和检测脚本
+  CustomProjectTests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v6
+      - name: Install requirements
+        run: |
+          uv pip install --system -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match
+          uv pip install --system PyQt5
+      - name: Test GUI module import
+        run: |
+          # 测试 GUI 模块导入（不启动界面）
+          python -c "
+          import sys
+          sys.argv = ['test']
+          exec(open('图形化.py').read().split('if __name__')[0])
+          print('GUI module import: OK')
+          "
+      - name: Test detection script
+        run: |
+          python detect.py --weights yolov5s.pt --source data/images/bus.jpg --imgsz 64 --device cpu --nosave
+          echo "Detection script: OK"
+      - name: Test model loading
+        run: |
+          python -c "
+          import torch
+          model = torch.hub.load('.', 'custom', path='yolov5s.pt', source='local')
+          print('Model loading: OK')
+          results = model('data/images/bus.jpg')
+          print(f'Inference: OK, detected {len(results.xyxy[0])} objects')
+          "
+
   Benchmarks:
     runs-on: ${{ matrix.os }}
     strategy:

@@ -24,7 +24,17 @@
 !cfg/yolov3*.cfg
 
 storage.googleapis.com
-runs/*
+# runs/* - 允许训练结果上传
+!runs/
+!runs/detect/*
+!runs/train/
+!runs/train/*/
+!runs/train/*/*.yaml
+!runs/train/*/*.csv
+!runs/train/*/*.png
+!runs/train/*/*.jpg
+!runs/train/*/weights/
+!runs/train/*/weights/*.pt
 data/*
 data/images/*
 !data/*.yaml
@@ -50,6 +60,9 @@ VOC/
 # Neural Network weights -----------------------------------------------------------------------------------------------
 *.weights
 *.pt
+!yolov5s.pt
+!runs/train/*/weights/best.pt
+!runs/train/*/weights/last.pt
 *.pb
 *.onnx
 *.engine
