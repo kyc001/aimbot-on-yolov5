@@ -8,12 +8,15 @@
 #     └── coco128  ← downloads here (7 MB)
 
 # Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
-path: D:/dl/aimbot/datasets/coco128 # dataset root dir
-train: D:/dl/aimbot/datasets/coco128/images/train2017/
-val: D:/dl/aimbot/datasets/coco128/images/train2017/
+path: ../datasets/coco128 # dataset root dir
+train: images/train2017 # train images (relative to 'path')
+val: images/train2017 # val images (relative to 'path')
 test: # test images (optional)
 
 # Classes
 names:
   0: ct
   1: t
+
+# Download script/URL (optional)
+download: https://github.com/ultralytics/assets/releases/download/v0.0.0/coco128.zip
