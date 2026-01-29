@@ -1,0 +1,13 @@
+# Custom CS2 Face Detection Dataset
+# Example usage: python train.py --data cs2.yaml
+
+# Train/val/test sets
+path: ../datasets/cs2 # dataset root dir
+train: images/train # train images
+val: images/val # val images
+test: # test images (optional)
+
+# Classes (CT vs T detection in CS2)
+names:
+  0: ct
+  1: t
